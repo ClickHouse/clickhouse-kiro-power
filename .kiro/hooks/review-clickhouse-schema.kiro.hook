@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Review ClickHouse Schema",
+  "description": "Review CREATE TABLE statements against ClickHouse best practices (ORDER BY, data types, partitioning, engine selection)",
+  "version": "1",
+  "when": {
+    "type": "userTriggered"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Load the clickhouse-best-practices steering file. Review any CREATE TABLE or ALTER TABLE statements in the current file or recent conversation against the 28 ClickHouse best-practice rules. Check: ORDER BY column order (low-to-high cardinality), data type selection (native types, LowCardinality, Nullable usage), partition strategy (cardinality, lifecycle alignment), and engine selection (ReplacingMergeTree for updates, CollapsingMergeTree for deletes). Report violations with specific rule references and suggested fixes."
+  }
+}
