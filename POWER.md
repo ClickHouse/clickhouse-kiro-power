@@ -463,7 +463,7 @@ Test with the public ClickHouse SQL Playground -- no credentials needed:
 ### Power
 - **License:** [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html)
 - **Privacy Policy:** [ClickHouse Privacy Policy](https://clickhouse.com/legal/privacy-policy)
-- **Support:** [GitHub Issues](https://github.com/ClickHouse/clickhouse-kiro-power/issues) | [ClickHouse Support](https://clickhouse.com/support)
+- **Support:** [GitHub Issues](https://github.com/ClickHouse/clickhouse-kiro-power/issues) | [Community Slack](https://clickhouse.com/slack)
 
 ### MCP Server -- ClickHouse Cloud Remote (`mcp.clickhouse.cloud`)
 - **License:** [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) ([source](https://github.com/ClickHouse/mcp-clickhouse/blob/main/LICENSE))
