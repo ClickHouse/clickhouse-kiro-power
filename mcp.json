@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "clickhouse": {
+      "url": "https://mcp.clickhouse.cloud/mcp",
+      "disabled": false,
+      "disabledTools": []
+    }
+  }
+}
