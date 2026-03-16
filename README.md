@@ -22,18 +22,12 @@ Kiro will run the right SQL, interpret the results, and give you actionable advi
 - [Kiro IDE](https://kiro.dev) installed
 - A ClickHouse database (Cloud, self-hosted, or the public SQL Playground)
 
-### 1. Connect to ClickHouse
-
-**ClickHouse Cloud (recommended):**
+### 1. Enable MCP on Your Service
 
 1. Log in to your [ClickHouse Cloud console](https://clickhouse.com/cloud)
 2. Select your service → click **Connect** → enable **Remote MCP Server**
 
-**Self-hosted ClickHouse:**
-
-You'll need [uv](https://docs.astral.sh/uv/getting-started/installation/) installed, and your ClickHouse host credentials ready.
-
-**Just want to try it out?** The public SQL Playground works with no credentials — see the [Configuration](#configuration) section.
+> Self-hosted ClickHouse and the public [SQL Playground](https://sql.clickhouse.com) are also supported via the open-source [`mcp-clickhouse`](https://github.com/ClickHouse/mcp-clickhouse) package. See `POWER.md` for configuration details.
 
 ### 2. Install the Power
 
@@ -43,9 +37,7 @@ Open Kiro and install the **ClickHouse Database** power from the Powers panel, o
 https://github.com/ClickHouse/clickhouse-kiro-power
 ```
 
-For ClickHouse Cloud, the power connects automatically via OAuth — authenticate in your browser when prompted on first use.
-
-For self-hosted ClickHouse or the SQL Playground, see the [Configuration](#configuration) section to update `mcp.json`.
+Authenticate via your browser when prompted on first use — no API keys needed.
 
 ### 3. Start Querying
 
@@ -163,60 +155,6 @@ When cloning for development, use `--recurse-submodules` to populate the submodu
 
 ```bash
 git clone --recurse-submodules https://github.com/ClickHouse/clickhouse-kiro-power
-```
-
-## Configuration
-
-### ClickHouse Cloud (Default)
-
-No config changes needed — the power ships with `mcp.json` pointing to `https://mcp.clickhouse.cloud/mcp`. Authentication is handled via OAuth on first use.
-
-### Self-Hosted ClickHouse
-
-Replace `mcp.json` with the open-source MCP server:
-
-```json
-{
-  "mcpServers": {
-    "clickhouse": {
-      "command": "uv",
-      "args": ["run", "--with", "mcp-clickhouse", "--python", "3.10", "mcp-clickhouse"],
-      "env": {
-        "CLICKHOUSE_HOST": "<your-host>",
-        "CLICKHOUSE_PORT": "8443",
-        "CLICKHOUSE_USER": "<your-user>",
-        "CLICKHOUSE_PASSWORD": "<your-password>",
-        "CLICKHOUSE_SECURE": "true",
-        "CLICKHOUSE_VERIFY": "true"
-      }
-    }
-  }
-}
-```
-
-Requires [uv](https://docs.astral.sh/uv/getting-started/installation/).
-
-### SQL Playground (Try It Out)
-
-No credentials needed — connect to the public ClickHouse SQL Playground:
-
-```json
-{
-  "mcpServers": {
-    "clickhouse": {
-      "command": "uv",
-      "args": ["run", "--with", "mcp-clickhouse", "--python", "3.10", "mcp-clickhouse"],
-      "env": {
-        "CLICKHOUSE_HOST": "sql-clickhouse.clickhouse.com",
-        "CLICKHOUSE_PORT": "8443",
-        "CLICKHOUSE_USER": "demo",
-        "CLICKHOUSE_PASSWORD": "",
-        "CLICKHOUSE_SECURE": "true",
-        "CLICKHOUSE_VERIFY": "true"
-      }
-    }
-  }
-}
 ```
 
 ## Troubleshooting
