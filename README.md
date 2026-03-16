@@ -22,7 +22,20 @@ Kiro will run the right SQL, interpret the results, and give you actionable advi
 - [Kiro IDE](https://kiro.dev) installed
 - A ClickHouse database (Cloud, self-hosted, or the public SQL Playground)
 
-### 1. Install the Power
+### 1. Connect to ClickHouse
+
+**ClickHouse Cloud (recommended):**
+
+1. Log in to your [ClickHouse Cloud console](https://clickhouse.com/cloud)
+2. Select your service → click **Connect** → enable **Remote MCP Server**
+
+**Self-hosted ClickHouse:**
+
+You'll need [uv](https://docs.astral.sh/uv/getting-started/installation/) installed, and your ClickHouse host credentials ready.
+
+**Just want to try it out?** The public SQL Playground works with no credentials — see the [Configuration](#configuration) section.
+
+### 2. Install the Power
 
 Open Kiro and install the **ClickHouse Database** power from the Powers panel, or add it from the GitHub URL:
 
@@ -30,17 +43,9 @@ Open Kiro and install the **ClickHouse Database** power from the Powers panel, o
 https://github.com/ClickHouse/clickhouse-kiro-power
 ```
 
-### 2. Connect to ClickHouse
+For ClickHouse Cloud, the power connects automatically via OAuth — authenticate in your browser when prompted on first use.
 
-**ClickHouse Cloud (recommended):**
-
-1. Log in to your [ClickHouse Cloud console](https://clickhouse.com/cloud)
-2. Select your service → click **Connect** → enable **Remote MCP Server**
-3. The power connects automatically via OAuth — authenticate in your browser when prompted
-
-**Self-hosted ClickHouse:**
-
-Replace `mcp.json` with the open-source MCP server config:
+For self-hosted ClickHouse, replace `mcp.json` with the open-source MCP server config:
 
 ```json
 {
@@ -53,29 +58,6 @@ Replace `mcp.json` with the open-source MCP server config:
         "CLICKHOUSE_PORT": "8443",
         "CLICKHOUSE_USER": "<your-user>",
         "CLICKHOUSE_PASSWORD": "<your-password>",
-        "CLICKHOUSE_SECURE": "true",
-        "CLICKHOUSE_VERIFY": "true"
-      }
-    }
-  }
-}
-```
-
-Requires [uv](https://docs.astral.sh/uv/getting-started/installation/) to be installed.
-
-**Just want to try it out?** Use the public SQL Playground — no credentials needed:
-
-```json
-{
-  "mcpServers": {
-    "clickhouse": {
-      "command": "uv",
-      "args": ["run", "--with", "mcp-clickhouse", "--python", "3.10", "mcp-clickhouse"],
-      "env": {
-        "CLICKHOUSE_HOST": "sql-clickhouse.clickhouse.com",
-        "CLICKHOUSE_PORT": "8443",
-        "CLICKHOUSE_USER": "demo",
-        "CLICKHOUSE_PASSWORD": "",
         "CLICKHOUSE_SECURE": "true",
         "CLICKHOUSE_VERIFY": "true"
       }
