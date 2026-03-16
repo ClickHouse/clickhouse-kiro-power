@@ -1,0 +1,63 @@
+name: Sync Agent Skills
+
+on:
+  schedule:
+    - cron: '0 6 * * 1' # Weekly on Monday at 6am UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fetch latest AGENTS.md from agent-skills
+        run: |
+          curl -sSfL \
+            "https://raw.githubusercontent.com/ClickHouse/agent-skills/main/skills/clickhouse-best-practices/AGENTS.md" \
+            -o /tmp/AGENTS.md
+
+      - name: Build steering file with frontmatter
+        run: |
+          cat > steering/clickhouse-best-practices.md << 'FRONTMATTER'
+          ---
+          inclusion: auto
+          name: clickhouse-best-practices
+          description: Comprehensive ClickHouse best-practices guide with 28 rules for schema design, query optimization, and insert strategy. Use when designing schemas, creating tables, optimizing queries, choosing ORDER BY keys, planning data ingestion, reviewing ClickHouse configurations, or troubleshooting performance.
+          ---
+
+          FRONTMATTER
+          cat /tmp/AGENTS.md >> steering/clickhouse-best-practices.md
+
+      - name: Update submodule reference
+        run: |
+          git submodule update --init --remote submodules/agent-skills
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet steering/ submodules/; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create PR
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          BRANCH="auto/sync-agent-skills-$(date +%Y%m%d)"
+          git checkout -b "$BRANCH"
+          git add steering/clickhouse-best-practices.md submodules/agent-skills
+          git commit -m "sync: update steering from agent-skills"
+          git push origin "$BRANCH"
+          gh pr create \
+            --title "sync: update steering from agent-skills" \
+            --body "Automated sync of best-practice rules from [ClickHouse/agent-skills](https://github.com/ClickHouse/agent-skills)." \
+            --base main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
