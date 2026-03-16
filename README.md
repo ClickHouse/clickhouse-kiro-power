@@ -45,26 +45,7 @@ https://github.com/ClickHouse/clickhouse-kiro-power
 
 For ClickHouse Cloud, the power connects automatically via OAuth — authenticate in your browser when prompted on first use.
 
-For self-hosted ClickHouse, replace `mcp.json` with the open-source MCP server config:
-
-```json
-{
-  "mcpServers": {
-    "clickhouse": {
-      "command": "uv",
-      "args": ["run", "--with", "mcp-clickhouse", "--python", "3.10", "mcp-clickhouse"],
-      "env": {
-        "CLICKHOUSE_HOST": "<your-host>",
-        "CLICKHOUSE_PORT": "8443",
-        "CLICKHOUSE_USER": "<your-user>",
-        "CLICKHOUSE_PASSWORD": "<your-password>",
-        "CLICKHOUSE_SECURE": "true",
-        "CLICKHOUSE_VERIFY": "true"
-      }
-    }
-  }
-}
-```
+For self-hosted ClickHouse or the SQL Playground, see the [Configuration](#configuration) section to update `mcp.json`.
 
 ### 3. Start Querying
 
@@ -182,6 +163,60 @@ When cloning for development, use `--recurse-submodules` to populate the submodu
 
 ```bash
 git clone --recurse-submodules https://github.com/ClickHouse/clickhouse-kiro-power
+```
+
+## Configuration
+
+### ClickHouse Cloud (Default)
+
+No config changes needed — the power ships with `mcp.json` pointing to `https://mcp.clickhouse.cloud/mcp`. Authentication is handled via OAuth on first use.
+
+### Self-Hosted ClickHouse
+
+Replace `mcp.json` with the open-source MCP server:
+
+```json
+{
+  "mcpServers": {
+    "clickhouse": {
+      "command": "uv",
+      "args": ["run", "--with", "mcp-clickhouse", "--python", "3.10", "mcp-clickhouse"],
+      "env": {
+        "CLICKHOUSE_HOST": "<your-host>",
+        "CLICKHOUSE_PORT": "8443",
+        "CLICKHOUSE_USER": "<your-user>",
+        "CLICKHOUSE_PASSWORD": "<your-password>",
+        "CLICKHOUSE_SECURE": "true",
+        "CLICKHOUSE_VERIFY": "true"
+      }
+    }
+  }
+}
+```
+
+Requires [uv](https://docs.astral.sh/uv/getting-started/installation/).
+
+### SQL Playground (Try It Out)
+
+No credentials needed — connect to the public ClickHouse SQL Playground:
+
+```json
+{
+  "mcpServers": {
+    "clickhouse": {
+      "command": "uv",
+      "args": ["run", "--with", "mcp-clickhouse", "--python", "3.10", "mcp-clickhouse"],
+      "env": {
+        "CLICKHOUSE_HOST": "sql-clickhouse.clickhouse.com",
+        "CLICKHOUSE_PORT": "8443",
+        "CLICKHOUSE_USER": "demo",
+        "CLICKHOUSE_PASSWORD": "",
+        "CLICKHOUSE_SECURE": "true",
+        "CLICKHOUSE_VERIFY": "true"
+      }
+    }
+  }
+}
 ```
 
 ## Troubleshooting
