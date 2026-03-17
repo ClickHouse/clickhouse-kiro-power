@@ -185,4 +185,4 @@ git clone --recurse-submodules https://github.com/ClickHouse/clickhouse-kiro-pow
 - **MCP Server License:** [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) ([source](https://github.com/ClickHouse/mcp-clickhouse/blob/main/LICENSE))
 - **Best Practices Content:** [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) ([source](https://github.com/ClickHouse/agent-skills/blob/main/LICENSE))
 - **Privacy Policy:** [ClickHouse Privacy Policy](https://clickhouse.com/legal/privacy-policy)
-- **Support:** [GitHub Issues](https://github.com/ClickHouse/clickhouse-kiro-power/issues) | [Community Slack](https://clickhouse.com/slack)
+- **Support:** [GitHub Issues](https://github.com/ClickHouse/clickhouse-kiro-power/issues) | [Community Slack](https://clickhouse.com/slack) | [Support Program](https://clickhouse.com/support/program)
