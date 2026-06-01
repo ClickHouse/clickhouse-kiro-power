@@ -13,7 +13,7 @@ jobs:
         id: app-token
         uses: actions/create-github-app-token@v2
         with:
-          app-id: <FILL_IN_CH_KIRO_APP_ID>
+          app-id: 3932049
           private-key: ${{ secrets.CH_KIRO_GITHUB_APP_PRIVATE_KEY }}
 
       - name: Checkout
